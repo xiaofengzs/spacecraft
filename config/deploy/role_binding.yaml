@@ -3,17 +3,17 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     app.kubernetes.io/name: clusterrolebinding
-    app.kubernetes.io/instance: manager-rolebinding
+    app.kubernetes.io/instance: spacecraft-operator
     app.kubernetes.io/component: rbac
     app.kubernetes.io/created-by: spacecraft
     app.kubernetes.io/part-of: spacecraft
     app.kubernetes.io/managed-by: kustomize
-  name: manager-rolebinding
+  name: spacecraft-operator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: manager-role
+  name: spacecraft-operator
 subjects:
 - kind: ServiceAccount
-  name: controller-manager
-  namespace: system
+  name: spacecraft-operator
+  namespace: default

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spacecraft-operator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spacecraft-operator
+  template:
+    metadata:
+      labels:
+        app: spacecraft-operator
+    spec:
+      serviceAccountName: spacecraft-operator
+      containers:
+      - name: spacecraft-operator
+        image: spacecraft:v1
+        args:
+        - --leader-elect
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80

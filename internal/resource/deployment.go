@@ -29,7 +29,7 @@ func (d deployment) MakeResource(carrier *spacecraftv1.Spacecraft) client.Object
 			Name:      carrier.Name,
 			Namespace: carrier.Namespace,
 			OwnerReferences: []metav1.OwnerReference{
-				*metav1.NewControllerRef(carrier, spacecraftv1.GroupVersion.WithKind("Carrier")),
+				*metav1.NewControllerRef(carrier, spacecraftv1.GroupVersion.WithKind("Spacecraft")),
 			},
 		},
 		Spec: appsv1.DeploymentSpec{
