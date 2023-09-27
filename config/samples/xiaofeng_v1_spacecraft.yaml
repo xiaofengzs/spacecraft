@@ -1,0 +1,14 @@
+apiVersion: xiaofeng.cloud/v1
+kind: Spacecraft
+metadata:
+  labels:
+    app.kubernetes.io/name: spacecraft
+    app.kubernetes.io/instance: spacecraft-sample
+    app.kubernetes.io/part-of: spacecraft
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: spacecraft
+  name: spacecraft-sample
+spec:
+  image: tomcat
+  port: 8080
+  replicas: 3

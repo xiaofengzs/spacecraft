@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- xiaofeng_v1_spacecraft.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples

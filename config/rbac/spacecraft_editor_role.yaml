@@ -1,0 +1,31 @@
+# permissions for end users to edit spacecrafts.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: spacecraft-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: spacecraft
+    app.kubernetes.io/part-of: spacecraft
+    app.kubernetes.io/managed-by: kustomize
+  name: spacecraft-editor-role
+rules:
+- apiGroups:
+  - xiaofeng.cloud
+  resources:
+  - spacecrafts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - xiaofeng.cloud
+  resources:
+  - spacecrafts/status
+  verbs:
+  - get

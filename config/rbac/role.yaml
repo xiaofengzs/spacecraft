@@ -1,0 +1,32 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+- apiGroups:
+  - xiaofeng.cloud
+  resources:
+  - spacecrafts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - xiaofeng.cloud
+  resources:
+  - spacecrafts/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - xiaofeng.cloud
+  resources:
+  - spacecrafts/status
+  verbs:
+  - get
+  - patch
+  - update
