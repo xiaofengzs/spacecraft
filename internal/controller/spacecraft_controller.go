@@ -27,18 +27,31 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	xiaofengv1 "cloud/spacecraft/api/v1"
+	xiaofengv1 "github.com/xiaofengzs/spacecraft/api/v1"
+	"github.com/xiaofengzs/spacecraft/internal/reconciler"
+	"github.com/xiaofengzs/spacecraft/internal/resource"
 )
 
 // SpacecraftReconciler reconciles a Spacecraft object
 type SpacecraftReconciler struct {
 	client.Client
-	Scheme *runtime.Scheme
+	Scheme      *runtime.Scheme
+	reconcilers []reconciler.Reconciler
+}
+
+func NewSpacecraftReconciler(c client.Client, s *runtime.Scheme) *SpacecraftReconciler {
+	var subReconcilers []reconciler.Reconciler
+	dr := reconciler.NewDeploymentReconciler(c, s, resource.NewDeployment())
+	sr := reconciler.NewServiceReconciler(c, s, resource.NewService())
+	subReconcilers = append(subReconcilers, dr, sr)
+	return &SpacecraftReconciler{Client: c, Scheme: s, reconcilers: subReconcilers}
 }
 
 //+kubebuilder:rbac:groups=xiaofeng.cloud,resources=spacecrafts,verbs=get;list;watch;create;update;patch;delete
 //+kubebuilder:rbac:groups=xiaofeng.cloud,resources=spacecrafts/status,verbs=get;update;patch
 //+kubebuilder:rbac:groups=xiaofeng.cloud,resources=spacecrafts/finalizers,verbs=update
+//+kubebuilder:rbac:groups="",resources=services,verbs=get;list;watch;create;update;patch;delete
+//+kubebuilder:rbac:groups=apps/v1,resources=deployments,verbs=get;list;watch;create;update;patch;delete
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -65,10 +78,16 @@ func (r *SpacecraftReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 		return ctrl.Result{}, err
 	}
 
-	
+	for _, reconciler := range r.reconcilers {
+		if result, err := reconciler.Reconcile(context.TODO(), req, spaceCraft); err != nil {
+			log.Log.Error(err, "reconcile sub resource failed")
+			return ctrl.Result{}, err
+		} else {
+			log.Log.Info("receive request", "key", result)
+		}
+	}
 
 	log.Log.Info("Get space craft from cluster", "spaceCraft", spaceCraft)
-
 
 	return ctrl.Result{}, nil
 }

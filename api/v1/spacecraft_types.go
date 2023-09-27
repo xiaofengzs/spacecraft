@@ -50,7 +50,6 @@ type ServiceConfig struct {
 	NodePort int32 `json:"nodePort,omitempty"`
 }
 
-
 // SpacecraftStatus defines the observed state of Spacecraft
 type SpacecraftStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster

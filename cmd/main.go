@@ -32,8 +32,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 
-	xiaofengv1 "cloud/spacecraft/api/v1"
-	"cloud/spacecraft/internal/controller"
+	xiaofengv1 "github.com/xiaofengzs/spacecraft/api/v1"
+	"github.com/xiaofengzs/spacecraft/internal/controller"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -89,10 +89,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controller.SpacecraftReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
-	}).SetupWithManager(mgr); err != nil {
+
+	spacecraftReconciler := controller.NewSpacecraftReconciler(mgr.GetClient(), mgr.GetScheme())
+
+	if err = spacecraftReconciler.SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Spacecraft")
 		os.Exit(1)
 	}

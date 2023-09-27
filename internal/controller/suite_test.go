@@ -32,7 +32,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	xiaofengv1 "cloud/spacecraft/api/v1"
+	xiaofengv1 "github.com/xiaofengzs/spacecraft/api/v1"
 	//+kubebuilder:scaffold:imports
 )
 
