@@ -12,3 +12,7 @@ spec:
   image: tomcat
   port: 8080
   replicas: 3
+  enableService: true
+  serviceConfig:
+    port: 8080
+    targetPort: 8080

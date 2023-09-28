@@ -40,5 +40,7 @@ func (dr deploymentReconciler) Reconcile(ctx context.Context, req ctrl.Request, 
 		}
 	}
 
+	// log.Log.Info("Get oldDeployment from cluster", "spaceCraft", oldDeployment)
+
 	return ctrl.Result{}, nil
 }

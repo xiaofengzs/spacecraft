@@ -56,9 +56,9 @@ type SpacecraftStatus struct {
 	// Important: Run "make" to regenerate code after modifying this file
 }
 
-//+kubebuilder:object:root=true
-//+kubebuilder:subresource:status
-
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:printcolumn:name="Replicas",type=integer,JSONPath=`.spec.replicas`
 // Spacecraft is the Schema for the spacecrafts API
 type Spacecraft struct {
 	metav1.TypeMeta   `json:",inline"`

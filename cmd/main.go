@@ -89,7 +89,6 @@ func main() {
 		os.Exit(1)
 	}
 
-
 	spacecraftReconciler := controller.NewSpacecraftReconciler(mgr.GetClient(), mgr.GetScheme())
 
 	if err = spacecraftReconciler.SetupWithManager(mgr); err != nil {

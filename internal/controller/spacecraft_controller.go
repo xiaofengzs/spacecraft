@@ -65,7 +65,7 @@ func NewSpacecraftReconciler(c client.Client, s *runtime.Scheme) *SpacecraftReco
 func (r *SpacecraftReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	log.Log.Info("receive request", "key", req.NamespacedName)
+	// log.Log.Info("receive request", "key", req.NamespacedName)
 
 	spaceCraft := &xiaofengv1.Spacecraft{}
 
@@ -79,15 +79,13 @@ func (r *SpacecraftReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	}
 
 	for _, reconciler := range r.reconcilers {
-		if result, err := reconciler.Reconcile(context.TODO(), req, spaceCraft); err != nil {
+		if _, err := reconciler.Reconcile(context.TODO(), req, spaceCraft); err != nil {
 			log.Log.Error(err, "reconcile sub resource failed")
 			return ctrl.Result{}, err
-		} else {
-			log.Log.Info("receive request", "key", result)
-		}
+		} 
 	}
 
-	log.Log.Info("Get space craft from cluster", "spaceCraft", spaceCraft)
+	// log.Log.Info("Get space craft from cluster", "spaceCraft", spaceCraft)
 
 	return ctrl.Result{}, nil
 }
